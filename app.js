@@ -10,6 +10,180 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const team = [];
+
+function promptUser() {
+  return inquirer.prompt([
+    {
+      type: "list",
+      name: "teamMember",
+      message: "Which type of team member would you like to add?",
+      choices: [
+        "Engineer",
+        "Intern",
+        "I don't want to add any more team members",
+      ],
+    },
+  ]);
+}
+
+// questions for User - Manager Questions
+function managerQuestions() {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "managerName",
+      message: "What is the Manager's name?",
+    },
+    {
+      type: "input",
+      name: "managerID",
+      message: "What is the Manager's ID?",
+    },
+    {
+      type: "input",
+      name: "managerEmail",
+      message: "What is the Manager's email?",
+    },
+    {
+      type: "input",
+      name: "office",
+      message: "What is the Manager's Office Number?",
+    },
+  ]);
+}
+
+// questions for User - Intern questions
+function internQuestions() {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "internName",
+      message: "What is the name of your Intern?",
+    },
+    {
+      type: "input",
+      name: "internID",
+      message: "What is your Intern's ID?",
+      // validate: function (answer) {
+      //   if (answer === `${answer.managerID}` || `${answer.engineerID}`) {
+      //     return console.log(
+      //       "This ID is already taken. Please enter a new ID number."
+      //     );
+      //   }
+      // },
+      // for each on team and look at the ID;s in there and see if they match ===
+      // use .match for email
+    },
+    {
+      type: "input",
+      name: "internEmail",
+      message: "What is your Intern's email?",
+    },
+    {
+      type: "input",
+      name: "internSchool",
+      message: "Which school does your Intern attend?",
+    },
+  ]);
+}
+//  questions for User - Engineer Questions
+function engineerQuestions() {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "engineerName",
+      message: "What is the name of your Engineer?",
+    },
+    {
+      type: "input",
+      name: "engineerID",
+      message: "What is your Engineer's ID?",
+      //   validate: function (answer) {
+      //     if (answer = `${answer.managerID}` || `${answer.internID}`){
+      //     return console.log("This ID is already taken. Please enter a new ID number.")
+      //   }
+    },
+    {
+      type: "input",
+      name: "engineerEmail",
+      message: "What is the email of your Engineer?",
+    },
+    {
+      type: "input",
+      name: "engineerGit",
+      message: "What is your Engineer's GitHub username?",
+    },
+  ]);
+}
+
+function createHTML() {
+  // save the result of render into a variable
+  const HTML = render(team);
+  // save HTML variable to a file
+  // name of the file, content
+  // writeFileAsync(HTML,  "utf8");
+  // fs.async
+  // Ignore most of my ramble here and got to the website that Renato sent through for the fight answer!
+  // https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options
+  // over ride with new HTML
+}
+
+async function init() {
+  try {
+    const managerInfo = await managerQuestions();
+    // new manager
+    const newManager = new Manager(
+      managerInfo.managerName,
+      managerInfo.managerID,
+      managerInfo.managerEmail,
+      managerInfo.office
+    );
+    // team is a global variable and so you can refer to it here
+    team.push(newManager);
+    createNewTeamMember();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function createNewTeamMember() {
+  const newEmployeeType = await promptUser();
+
+  switch (newEmployeeType.teamMember) {
+    case "Engineer":
+      const newEngineerInfo = await engineerQuestions();
+      const newEngineer = new Engineer(
+        newEngineerInfo.engineerName,
+        newEngineerInfo.engineerID,
+        newEngineerInfo.engineerEmail,
+        newEngineerInfo.engineerGit
+      );
+      team.push(newEngineer);
+      createNewTeamMember();
+      break;
+    case "Intern":
+      const newInternInfo = await internQuestions();
+      const newIntern = new Intern(
+        newInternInfo.internName,
+        newInternInfo.internID,
+        newInternInfo.internEmail,
+        newInternInfo.internSchool
+      );
+      team.push(newIntern);
+      createNewTeamMember();
+      break;
+    default:
+      // generate HTML and save to the disk
+      createHTML();
+      console.log("Refresh your browser now to see updated team...");
+  }
+  console.log(team);
+}
+
+init();
+// fs.async.
+// render(team);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -24,7 +198,7 @@ const render = require("./lib/htmlRenderer");
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
+// HINT: each employee type (manager, Intern, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
 
