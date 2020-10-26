@@ -1,6 +1,7 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const Employee = require("./lib/Employee");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -27,7 +28,7 @@ function promptUser() {
   ]);
 }
 
-// questions for User - Manager Questions
+// Manager Questions for the user
 function managerQuestions() {
   return inquirer.prompt([
     {
@@ -39,11 +40,13 @@ function managerQuestions() {
       type: "input",
       name: "managerID",
       message: "What is the Manager's ID?",
+      validate: (val) => /^\d+$/.test(val),
     },
     {
       type: "input",
       name: "managerEmail",
       message: "What is the Manager's email?",
+      validate: (val) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(val),
     },
     {
       type: "input",
@@ -53,7 +56,7 @@ function managerQuestions() {
   ]);
 }
 
-// questions for User - Intern questions
+// Intern questions for the user
 function internQuestions() {
   return inquirer.prompt([
     {
@@ -65,6 +68,7 @@ function internQuestions() {
       type: "input",
       name: "internID",
       message: "What is your Intern's ID?",
+      validate: (val) => /^\d+$/.test(val),
       // validate: function (answer) {
       //   if (answer === `${answer.managerID}` || `${answer.engineerID}`) {
       //     return console.log(
@@ -79,6 +83,7 @@ function internQuestions() {
       type: "input",
       name: "internEmail",
       message: "What is your Intern's email?",
+      validate: (val) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(val),
     },
     {
       type: "input",
@@ -87,7 +92,7 @@ function internQuestions() {
     },
   ]);
 }
-//  questions for User - Engineer Questions
+//  Engineer Questions for the user
 function engineerQuestions() {
   return inquirer.prompt([
     {
@@ -99,6 +104,7 @@ function engineerQuestions() {
       type: "input",
       name: "engineerID",
       message: "What is your Engineer's ID?",
+      validate: (val) => /^\d+$/.test(val),
       //   validate: function (answer) {
       //     if (answer = `${answer.managerID}` || `${answer.internID}`){
       //     return console.log("This ID is already taken. Please enter a new ID number.")
@@ -108,6 +114,7 @@ function engineerQuestions() {
       type: "input",
       name: "engineerEmail",
       message: "What is the email of your Engineer?",
+      validate: (val) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(val),
     },
     {
       type: "input",
@@ -118,16 +125,25 @@ function engineerQuestions() {
 }
 
 function createHTML() {
-  // save the result of render into a variable
+  // save the result of render into a variable - save HTML variable to a file
   const HTML = render(team);
-  // save HTML variable to a file
-  // name of the file, content
-  // writeFileAsync(HTML,  "utf8");
-  // fs.async
-  // Ignore most of my ramble here and got to the website that Renato sent through for the fight answer!
-  // https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options
-  // over ride with new HTML
+  fs.writeFile(outputPath, HTML);
+  if (err) throw err;
+  console.log("Refresh your browser now to see updated team...");
 }
+
+// try {
+//   const HTML = render(team);
+//   await writeFileAsync("team.html", html);
+//   console.log("Refresh your browser now to see updated team...");
+// } catch (err) {
+//   console.log(err);
+// }
+
+//
+// name of the file, content
+// https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options
+// over ride with new HTML
 
 async function init() {
   try {
@@ -178,7 +194,7 @@ async function createNewTeamMember() {
       createHTML();
       console.log("Refresh your browser now to see updated team...");
   }
-  console.log(team);
+  // console.log(team);
 }
 
 init();
