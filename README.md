@@ -58,26 +58,15 @@ This responsive application has six main Javascript file. A sample HTML file, ge
 
 ## Initial interface
 
-### Screenshots
-
-#### Screenshots of the VS Code and Terminal
-
-!
-
-#### Screenshots of the resulting README file
-
-!
-
 #### Walkthrough Video
-
-!
+![employee-walkthrough-video](https://user-images.githubusercontent.com/67722377/97168174-1c4d3d00-17dc-11eb-9536-086848bd48a4.gif)
 
 ## Licence
 * [Apache License 2.0](http://www.apache.org/licenses/)
 
 ## Link to the App
 
-Please view a<a href=""> walkthrough video</a> hosted on Google Drive demonstrating how a user would invoke the application from the command line, enter responses to all of the inquirer prompts in the application, and finally generate a HTML file.<hr>
+Please view a<a href="https://drive.google.com/file/d/1nlEoPdSbkNKoKKUhoV5158UARJlNuMgz/view?usp=sharing"> walkthrough video</a> hosted on Google Drive demonstrating how a user would invoke the application from the command line, enter responses to all of the inquirer prompts in the application, and finally generate a HTML file.<hr>
 
 ## Authors
 * **SARAH RONALD** - 
