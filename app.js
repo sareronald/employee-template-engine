@@ -13,6 +13,7 @@ const render = require("./lib/htmlRenderer");
 
 const team = [];
 
+// Choose to enter a new team member: Engineer, Intern or none
 function promptUser() {
   return inquirer.prompt([
     {
@@ -124,23 +125,15 @@ function engineerQuestions() {
   ]);
 }
 
-function createHTML() {
-  // save the result of render into a variable - save HTML variable to a file
-  const HTML = render(team);
-  fs.writeFile(outputPath, HTML);
-  if (err) throw err;
-  console.log("Refresh your browser now to see updated team...");
-}
-
-// try {
+// Trying to save the result of render into a variable - save HTML variable to a file
+// function createHTML() {
 //   const HTML = render(team);
-//   await writeFileAsync("team.html", html);
-//   console.log("Refresh your browser now to see updated team...");
-// } catch (err) {
-//   console.log(err);
+//   fs.writeFile("team.html", data, (err) => {
+//     if (err) throw err;
+//     console.log("Refresh your browser now to see updated team...");
+//   });
 // }
 
-//
 // name of the file, content
 // https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options
 // over ride with new HTML
@@ -198,8 +191,6 @@ async function createNewTeamMember() {
 }
 
 init();
-// fs.async.
-// render(team);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
