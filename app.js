@@ -126,13 +126,16 @@ function engineerQuestions() {
 }
 
 // Trying to save the result of render into a variable - save HTML variable to a file
-// function createHTML() {
-//   const HTML = render(team);
-//   fs.writeFile("team.html", data, (err) => {
-//     if (err) throw err;
-//     console.log("Refresh your browser now to see updated team...");
-//   });
-// }
+function createHTML() {
+  const HTML = render(team);
+  fs.writeFile(outputPath, HTML, (err) => {
+    if (err) throw err;
+    console.log("Refresh your browser now to see updated team...");
+  });
+}
+
+// check that the path exists - check a dir exists if doesn;t exist create it!
+// output dir first
 
 // name of the file, content
 // https://nodejs.org/api/fs.html#fs_fs_writefilesync_file_data_options
