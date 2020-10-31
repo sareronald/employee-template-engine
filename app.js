@@ -127,7 +127,7 @@ function engineerQuestions() {
 
 // Trying to save the result of render into a variable - save HTML variable to a file
 function createHTML() {
-  const HTML = render(team);
+  let HTML = render(team);
   fs.writeFile(outputPath, HTML, (err) => {
     if (err) throw err;
     console.log("Refresh your browser now to see updated team...");
@@ -188,7 +188,6 @@ async function createNewTeamMember() {
     default:
       // generate HTML and save to the disk
       createHTML();
-      console.log("Refresh your browser now to see updated team...");
   }
   // console.log(team);
 }
